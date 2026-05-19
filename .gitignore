@@ -1,0 +1,4 @@
+solution/*.o
+solution/infinite
+_test_mandelbrot
+_test_view
