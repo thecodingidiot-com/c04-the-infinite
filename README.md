@@ -94,4 +94,4 @@ one `view_zoom(&v, 0.9)` step scales correctly.
 
 ## License
 
-GPLv2. See [LICENSE](LICENSE).
+MIT License. See [LICENSE](LICENSE).
