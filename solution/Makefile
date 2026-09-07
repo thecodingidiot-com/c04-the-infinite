@@ -1,6 +1,8 @@
 NAME    = infinite
 CC      = gcc
-CFLAGS  = -Wall -Wextra -g -std=c99 $(shell pkg-config --cflags sdl2)
+CFLAGS  = -Wall -Wextra -Werror -std=c99 $(shell pkg-config --cflags sdl2)
+BUILD   = -g -O0
+RELEASE = -O2
 LIBS    = $(shell pkg-config --libs sdl2) -lm
 
 SRCS    = main.c \
@@ -12,15 +14,20 @@ SRCS    = main.c \
 
 OBJS    = $(SRCS:.c=.o)
 
-.PHONY: all clean fclean re
+.PHONY: all release clean fclean re
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) $(LIBS) -o $(NAME)
+	$(CC) $(BUILD) $(OBJS) $(LIBS) -o $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(BUILD) -c $< -o $@
+
+release:
+	@$(MAKE) --no-print-directory fclean
+	@$(MAKE) --no-print-directory BUILD="$(RELEASE)"
+	strip $(NAME)
 
 clean:
 	rm -f $(OBJS)
